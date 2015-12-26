@@ -1,0 +1,6 @@
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.exe.config
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.exe
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.pdb
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.csprojResolveAssemblyReference.cache
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.exe
+D:\studia\projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.pdb
