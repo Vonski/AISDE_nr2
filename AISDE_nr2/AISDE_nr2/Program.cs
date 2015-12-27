@@ -29,12 +29,12 @@ namespace AISDE_nr2
             lc.network.show();
             Console.WriteLine("\r\n");
             lc.network.showLinksFromNodes();
-            lc.findOneToAll(4);
+            lc.findOneToAll(5);
             Console.WriteLine("\r\n");
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 6; i++)
                 Console.WriteLine(lc.network.nodes[i].label);
             Console.WriteLine("\r\n");
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 6; i++)
                 Console.WriteLine(lc.paths[i]);
             Console.Read();
             /*Network network = new Network();
