@@ -8,8 +8,8 @@ namespace AISDE_nr2
 {
     interface IFindPath
     {
-        void findAB(int A, int B);
-        void findOneToAll(int A);
-        void findAll();
+        Path findAB(int A, int B);
+        Path[] findOneToAll(int A);
+        Path[][] findAll();
     }
 }
