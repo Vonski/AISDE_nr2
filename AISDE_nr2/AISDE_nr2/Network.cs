@@ -14,6 +14,7 @@ namespace AISDE_nr2
         public List<Heap<Link>> links_from_node;
         public Link[] links;
         public Node[] nodes;
+        public Path[][] paths;
         public int[,] connections;
 
         void readFile()
@@ -40,6 +41,8 @@ namespace AISDE_nr2
             
             links = new Link[number_of_links];
             nodes = new Node[number_of_nodes];
+            paths = new Path[number_of_nodes][];
+
             links_from_node = new List<Heap<Link>>();
             for (int i = 0; i < number_of_nodes; i++)
             {
@@ -66,6 +69,14 @@ namespace AISDE_nr2
             {
                 Node node = new Node(i+1);
                 nodes[i] = node;
+                Path[] p = new Path[number_of_nodes];
+                paths[i] = p;  
+                for(int j=0; j<number_of_nodes; j++)
+                {
+                    Path path = new Path();
+                    paths[i][j] = path;
+                }
+                
             }
 
         }

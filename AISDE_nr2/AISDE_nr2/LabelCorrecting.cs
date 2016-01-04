@@ -10,25 +10,17 @@ namespace AISDE_nr2
     {
         public Network network;
         Queue<Node> queue;
-        public Path[] path;
         public LabelCorrecting()
         {
             network = new Network();
             for (int i = 0; i < network.number_of_nodes; i++)
-                network.nodes[i].label = double.PositiveInfinity;
-            path = new Path[network.number_of_nodes];
-            for (int i = 0; i < network.number_of_nodes; i++)
-            {
-                Path p = new Path();
-                path[i] = p;
-            }
-            
+                network.nodes[i].label = double.PositiveInfinity;                        
         }
 
         public Path findAB(int A, int B)
         {
-            Path[] p= findOneToAll(A);
-            return p[B - 1];
+            network.paths[A - 1] = findOneToAll(A);
+            return network.paths[A - 1][B - 1];
         }
 
         public Path[] findOneToAll(int A)
@@ -43,7 +35,7 @@ namespace AISDE_nr2
                 queue.Enqueue(network.nodes[A - 1]);
                 network.nodes[A - 1].enqueued = true;
                 for (int i = 0; i < network.number_of_nodes; i++)
-                    path[i].nodes_on_path = A.ToString() + " ";
+                    network.paths[A-1][i].nodes_on_path = A.ToString() + " ";
                 Node node = new Node();
                
                 while (queue.Count() != 0)
@@ -58,9 +50,9 @@ namespace AISDE_nr2
                             network.nodes[heap.first().node_end - 1].label = node.label + heap.first().link_length;
 
                             if (heap.first().node_start != A)
-                                path[heap.first().node_end - 1].nodes_on_path = path[heap.first().node_start - 1].nodes_on_path + network.nodes[heap.first().node_end - 1].id + " ";
+                                network.paths[A-1][heap.first().node_end - 1].nodes_on_path = network.paths[A-1][heap.first().node_start - 1].nodes_on_path + network.nodes[heap.first().node_end - 1].id + " ";
                             else
-                                path[heap.first().node_end - 1].nodes_on_path = path[heap.first().node_end - 1].nodes_on_path + network.nodes[heap.first().node_end - 1].id + " ";
+                                network.paths[A-1][heap.first().node_end - 1].nodes_on_path = network.paths[A-1][heap.first().node_end - 1].nodes_on_path + network.nodes[heap.first().node_end - 1].id + " ";
 
                             if (!network.nodes[heap.first().node_end - 1].enqueued)
                             {
@@ -77,12 +69,10 @@ namespace AISDE_nr2
                 for (int i = 0; i < network.number_of_nodes; i++)
                 {
                     if (network.nodes[i].enqueued == false)
-                        path[i].nodes_on_path = "Do tego wierzcholka nie da sie dojsc";
+                        network.paths[A-1][i].nodes_on_path = "Do tego wierzcholka nie da sie dojsc";
+                    network.paths[A-1][i].length = network.nodes[i].label;
                 }
-                
-                for (int i = 0; i < network.number_of_nodes; i++)
-                    path[i].length = network.nodes[i].label;
-               
+                        
             }
 
             for (int i = 0; i < network.number_of_nodes; i++)
@@ -91,16 +81,15 @@ namespace AISDE_nr2
                 network.nodes[i].enqueued = false;
             }
 
-                return path;
+            return network.paths[A-1];
         }
         public Path[][] findAll()
         {
-            Path[][] p = new Path[network.number_of_nodes][];
             for(int i=0; i<network.number_of_nodes; i++)
             {
-                 p[i] = findOneToAll(i + 1);
+                 network.paths[i] = findOneToAll(i + 1);
             }
-            return p;
+            return network.paths;
         }
     }
 }
