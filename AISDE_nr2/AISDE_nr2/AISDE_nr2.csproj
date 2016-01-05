@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Floyd.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="IFindPath.cs" />
     <Compile Include="LabelCorrecting.cs" />
