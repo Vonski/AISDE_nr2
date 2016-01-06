@@ -11,12 +11,21 @@ namespace AISDE_nr2
         public Network network;
         private double[,] d;
         private Random rand;
+        private bool not_drawed;
         
         public Floyd()
         {
             network = new Network();
             d = new double[network.number_of_nodes, network.number_of_nodes];
             rand = new Random();
+            not_drawed = true;
+        }
+
+        public void redraw()
+        {
+            for (int i = 0; i < network.links.Length; i++)
+                network.links[i].link_length = rand.Next(0,1);
+            not_drawed = false;
         }
 
         public Path findAB(int A, int B)
@@ -44,9 +53,10 @@ namespace AISDE_nr2
             double z;
             for (int i = 0; i < network.links.Length; i++)
             {
-                z = rand.Next(1, 10);
+                z = rand.Next(0,1);
                 d[network.links[i].node_start-1, network.links[i].node_end-1] = z;
-                network.links[i].link_length = z;
+                if(not_drawed)
+                    network.links[i].link_length = z;
             }
             /*
             for (int i = 0; i < network.number_of_nodes; i++)

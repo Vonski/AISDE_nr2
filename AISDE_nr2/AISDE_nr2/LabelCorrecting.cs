@@ -10,11 +10,19 @@ namespace AISDE_nr2
     {
         public Network network;
         Queue<Node> queue;
+        private Random rand;
         public LabelCorrecting()
         {
             network = new Network();
             for (int i = 0; i < network.number_of_nodes; i++)
-                network.nodes[i].label = double.PositiveInfinity;                        
+                network.nodes[i].label = double.PositiveInfinity;
+            rand = new Random();
+        }
+
+        public void redraw()
+        {
+            for (int i = 0; i < network.links.Length; i++)
+                network.links[i].link_length = rand.Next(0,1);
         }
 
         public Path findAB(int A, int B)
