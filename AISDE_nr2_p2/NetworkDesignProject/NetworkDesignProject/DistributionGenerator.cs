@@ -32,7 +32,7 @@ namespace NetworkDesignProject
 
         public int choose()
         {
-            //NormalDistributionGenerator nd = new NormalDistributionGenerator();
+            //NormalDistributionGenerator nd = new NormalDistributionGenerator(); commit
             double r = generateRndStd(0, 1.25);
             int ri = generateRndInt(r);
             int ans = list[ri];
