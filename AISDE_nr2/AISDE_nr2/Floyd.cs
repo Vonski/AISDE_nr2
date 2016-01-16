@@ -24,7 +24,7 @@ namespace AISDE_nr2
         public void redraw()
         {
             for (int i = 0; i < network.links.Length; i++)
-                network.links[i].link_length = rand.Next(0,1);
+                network.links[i].link_length = rand.NextDouble();
             not_drawed = false;
         }
 
