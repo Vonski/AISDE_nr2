@@ -1,0 +1,10 @@
+# liczba wezlow, wezly numerowane sa od 1
+WEZLY = 4
+# liczba krawedzi
+LACZA = 5
+# kazde lacze to trojka (id., wezel poczatkowy, wezel koncowy)
+1 1 2
+2 2 4
+3 4 3
+4 3 1
+5 1 4
