@@ -10,14 +10,9 @@ namespace NetworkDesignProject
     {
         static void Main(string[] args)
         {
-            LabelCorrecting test = new LabelCorrecting();
-            for (int i = 0; i < 1; i++)
-            {
-                test.redraw();
-                test.graph.show();
-                test.findAB(2, 3);
-                Console.WriteLine(test.graph.paths[1][2].nodes_on_path);
-            }
+            NetworkDesign test = new NetworkDesign();
+
+            test.show();
 
             Console.ReadLine();
         }

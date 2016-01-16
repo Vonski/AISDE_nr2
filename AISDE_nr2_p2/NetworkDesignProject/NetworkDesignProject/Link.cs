@@ -11,7 +11,10 @@ namespace NetworkDesignProject
         public int id;
         public int node_start;
         public int node_end;
-        public double link_length;
+        public double link_length;      // Stosunek koszt/przepustowosc
+        public double price;            // Cena modułu
+        public double capacity;         // Przepustowosc modułu
+        public int modules_counter;     // Aktualna liczba modułów
 
         public Link()
         {
