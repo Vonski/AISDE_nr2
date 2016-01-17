@@ -15,6 +15,7 @@ namespace NetworkDesignProject
             test.show();
             test.firstSolution();
             test.show();
+            test.showSolution();
             test.nextSolution();
             test.show();
             test.showSolution();
