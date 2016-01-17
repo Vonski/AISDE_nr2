@@ -125,10 +125,7 @@ namespace AISDE_nr2
                         table[i] = table[2 * i + 1];
                         table[2 * i + 1] = tmp;
                         Swap(2 * i + 1);
-                        //i = 2 * i + 1;
-                    }
-                    //else
-                       // break;
+                    }                    
                 }
                 else
                 {
@@ -139,10 +136,7 @@ namespace AISDE_nr2
                         table[i] = table[2 * i + 2];
                         table[2 * i + 2] = tmp;
                         Swap(2 * i + 2);
-                        //i = 2 * i + 2;
-                    }
-                   // else
-                        //break;
+                    }                   
                 }
 
             }

@@ -73,7 +73,6 @@ namespace NetworkDesignProject
             {
                 Heap<Link> heap = new Heap<Link>();
                 graph.links_from_node.Add(heap);
-                graph.links_from_node[i] = this.copyHeap(i);
                 graph.nodes[i] = new Node();
                 graph.nodes[i].id = this.nodes[i].id;
                 graph.nodes[i].label = this.nodes[i].label;
@@ -82,7 +81,9 @@ namespace NetworkDesignProject
 
             for (int i = 0; i < number_of_links; i++)
             {
-                graph.links[i] = new Link();
+                Link link = new Link();
+                graph.links[i] = link;
+                graph.links_from_node[this.links[i].node_start-1].Add(link);
                 graph.links[i].id = this.links[i].id;
                 graph.links[i].capacity = this.links[i].capacity;
                 graph.links[i].link_length = this.links[i].link_length;
