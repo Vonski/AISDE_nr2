@@ -259,7 +259,7 @@ namespace NetworkDesignProject
         public bool nextSolution()
         {
             int did = choose();
-            
+
             string[] words;
             words = working_copy.graph.demands[did-1].nodes_on_path.Split(' ');
             for (int k = 0; k < words.Length - 2; k++)
@@ -268,12 +268,14 @@ namespace NetworkDesignProject
                     if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k + 1]))
                     {
                         int n = (int)Math.Ceiling((working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use-working_copy.graph.demands[did-1].length) / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
+                        int tmp = working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].modules_counter;
                         working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].modules_counter = n;
-                        working_copy.graph.price = n * working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].price;
+                        working_copy.graph.price -= (tmp- n) * working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].price;
                         working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use -= working_copy.graph.demands[did-1].length;
                         break;
                     }
             }
+            
 
             LabelCorrecting residual_graph = new LabelCorrecting();
             residual_graph.graph = working_copy.graph.residualGraph();
@@ -296,19 +298,22 @@ namespace NetworkDesignProject
                         residual_graph.graph.links[i].modules_counter += n;
                         residual_graph.graph.links[i].link_length = n * residual_graph.graph.links[i].price / (n * residual_graph.graph.links[i].capacity + residual_graph.graph.links[i].capacity_in_use);
                     }
+                    else
+                        residual_graph.graph.links[i].link_length = 0;
                 }
-                else
-                    residual_graph.graph.links[i].link_length = 0;
             }
             
+            //residual_graph.graph.show();
+
             Path path = new Path();
             path = working_copy.findAB(working_copy.graph.demands[did-1].node_start, working_copy.graph.demands[did-1].node_end);
             working_copy.graph.demands[did-1].dataFromPath(path);
 
+            words = working_copy.graph.demands[did - 1].nodes_on_path.Split(' ');
             for (int k = 0; k < words.Length - 2; k++)
             {
-                for (int j = 0; j < residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].counter; j++)
-                    if (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k + 1]))
+                for (int j = 0; j < working_copy.graph.links_from_node[int.Parse(words[k]) - 1].counter; j++)
+                    if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k + 1]))
                     {
                         int n;
                         if (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use==0)
@@ -349,20 +354,24 @@ namespace NetworkDesignProject
         public Graph designing()
         {
             firstSolution();
+            showSolution();
             bool changed;
             int counter = 0;
             temperature = 1000;
-            while (temperature > 1 && counter < 20)
+            double alpha = 0.9;
+            while (temperature > 1)// && counter < 20)
             {
                 changed = nextSolution();
                 if (changed == true)
                 {
-                    temperature = temperature / 2;
+                    temperature = temperature * alpha;
                     counter = 0;
                 }
                 else
                     counter++;
             }
+
+            showSolution();
             return best_solution;
         }
 
