@@ -4,3 +4,9 @@ F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISD
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.csprojResolveAssemblyReference.cache
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.exe
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.pdb
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\bin\Debug\NetworkDesignProject.exe.config
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\bin\Debug\NetworkDesignProject.exe
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\bin\Debug\NetworkDesignProject.pdb
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.csprojResolveAssemblyReference.cache
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.exe
+D:\studia\AISDE_nr2\AISDE_nr2_p2\NetworkDesignProject\NetworkDesignProject\obj\Debug\NetworkDesignProject.pdb

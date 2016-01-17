@@ -25,5 +25,10 @@ namespace NetworkDesignProject
             this.node_start = start;
             this.node_end = end;
         }
+
+        public void dataFromPath(Path path)
+        {
+            this.nodes_on_path = path.nodes_on_path;
+        }
     }
 }

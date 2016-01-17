@@ -13,6 +13,8 @@ namespace NetworkDesignProject
             NetworkDesign test = new NetworkDesign();
 
             test.show();
+            test.firstSolution();
+            test.show();
 
             Console.ReadLine();
         }

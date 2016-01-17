@@ -9,11 +9,9 @@ namespace NetworkDesignProject
     class DistributionGenerator
     {
         Random rnd;
-        public List<int> list;
         public DistributionGenerator()
         {
             rnd = new Random();
-            list = new List<int>(20);
         }
         public double generateRndStd(double mean, double stddev)
         {
@@ -29,16 +27,6 @@ namespace NetworkDesignProject
             int rnd_int_normal = (int)Math.Floor(Math.Abs(rnd_std));
             return rnd_int_normal;
         }
-
-        public int choose()
-        {
-            //NormalDistributionGenerator nd = new NormalDistributionGenerator(); commit
-            double r = generateRndStd(0, 1.25);
-            int ri = generateRndInt(r);
-            int ans = list[ri];
-            list.Add(ans);
-            list.RemoveAt(ri);
-            return ans;
-        }
+        
     }
 }

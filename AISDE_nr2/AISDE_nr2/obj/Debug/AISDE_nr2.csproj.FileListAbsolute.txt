@@ -10,3 +10,9 @@ F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISD
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.csprojResolveAssemblyReference.cache
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.exe
 F:\Multimedia\Dokumenty\Studia\PW Notatki\Semestr 3\AISDE\Projekty\Projekt2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.pdb
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.exe.config
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.exe
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.pdb
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.exe
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\bin\Debug\AISDE_nr2.pdb
+D:\studia\AISDE_nr2\AISDE_nr2\AISDE_nr2\obj\Debug\AISDE_nr2.csprojResolveAssemblyReference.cache

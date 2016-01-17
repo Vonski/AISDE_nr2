@@ -13,12 +13,16 @@ namespace NetworkDesignProject
         Graph reference_solution;
         public LabelCorrecting working_copy;
         double temperature;
-        Demand[] demands;
-        int number_of_demands;
+        public List<int> list;
+        DistributionGenerator gen;
+
 
         public NetworkDesign()
         {
             working_copy = new LabelCorrecting();
+            list = new List<int>(20);
+            gen = new DistributionGenerator();
+
 
             Console.WriteLine("Przeciagnij plik inicjalizacyjny i wcisnij enter:");
             string str = Console.ReadLine();
@@ -103,8 +107,8 @@ namespace NetworkDesignProject
                     }
             }
             words = tmp.Split(' ');
-            number_of_demands = int.Parse(words[2]);
-            demands = new Demand[number_of_demands];
+            working_copy.graph.number_of_demands = int.Parse(words[2]);
+            working_copy.graph.demands = new Demand[working_copy.graph.number_of_demands];
             logic = true;
             while (logic)
             {
@@ -115,7 +119,7 @@ namespace NetworkDesignProject
                         logic = false;
                     }
             }
-            for (int i = 0; i < number_of_demands; i++)
+            for (int i = 0; i < working_copy.graph.number_of_demands; i++)
             {
                 words = tmp.Split(' ');
                 did = int.Parse(words[0]);
@@ -124,7 +128,7 @@ namespace NetworkDesignProject
 
                 Demand demand = new Demand(did, node_start, node_end);
                 demand.length = double.Parse(words[3], System.Globalization.CultureInfo.InvariantCulture);
-                demands[i] = demand;
+                working_copy.graph.demands[i] = demand;
 
                 tmp = filestream.ReadLine();
             }
@@ -149,10 +153,87 @@ namespace NetworkDesignProject
 
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine(number_of_demands);
+            Console.WriteLine(working_copy.graph.number_of_demands);
             Console.WriteLine();
-            for (int i = 0; i < number_of_demands; i++)
-                Console.WriteLine("Zapotrzebowanie: " + demands[i].id + ", Miedzy " + demands[i].node_start + " a " + demands[i].node_end + " o rozmiarze: " + demands[i].length);
+            for (int i = 0; i < working_copy.graph.number_of_demands; i++)
+                Console.WriteLine("Zapotrzebowanie: " + working_copy.graph.demands[i].id + ", Miedzy " + working_copy.graph.demands[i].node_start + " a " + working_copy.graph.demands[i].node_end + " o rozmiarze: " + working_copy.graph.demands[i].length + " sciezka: " + working_copy.graph.demands[i].nodes_on_path);
+            Console.WriteLine();
+            
+        }
+
+        public int choose()
+        {
+            double r = gen.generateRndStd(0, 1.25);
+            int ri = gen.generateRndInt(r);
+            int id = list[ri];
+            list.Add(id);
+            list.RemoveAt(ri);
+            return id;
+        }
+
+        public void firstSolution()
+        {
+            double sum = 0;
+            int n=0;
+            for (int i = 0; i < working_copy.graph.number_of_demands; i++)
+            {
+                sum += working_copy.graph.demands[i].length;
+            }
+            for (int i = 0; i < working_copy.graph.number_of_links; i++ )
+            {
+                n = (int)Math.Ceiling(sum / working_copy.graph.links[i].capacity);
+                working_copy.graph.links[i].modules_counter = n;
+            }
+            Random rnd = new Random();
+
+            Path path = new Path();
+            int r = rnd.Next(0, working_copy.graph.number_of_demands);
+            int rz = r;
+            while(r>=0)
+            {
+                path = working_copy.findAB(working_copy.graph.demands[r].node_start, working_copy.graph.demands[r].node_end);
+                working_copy.graph.demands[r].dataFromPath(path);
+                r--;
+            }
+            while (rz < working_copy.graph.number_of_demands)
+            {
+                path = working_copy.findAB(working_copy.graph.demands[rz].node_start, working_copy.graph.demands[rz].node_end);
+                working_copy.graph.demands[rz].dataFromPath(path);
+                rz++;
+            }
+
+            graphUpdate();
+            best_solution = working_copy.graph.copyGraph();
+            reference_solution = working_copy.graph.copyGraph();
+
+        }
+
+        public void graphUpdate()
+        {
+            for (int i = 0; i < working_copy.graph.number_of_links; i++)
+                working_copy.graph.links[i].modules_counter = 0;
+            working_copy.graph.price = 0;
+
+            for (int i = 0; i < working_copy.graph.number_of_demands; i++)
+            {
+                string[] words;
+                words = working_copy.graph.demands[i].nodes_on_path.Split(' ');
+                for (int k = 0; k < words.Length - 2; k++)
+                {
+                    for (int j = 0; j < working_copy.graph.links_from_node[int.Parse(words[k]) - 1].counter; j++)
+                        if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k+1]))
+                        {
+                            int n = (int)Math.Ceiling(working_copy.graph.demands[i].length / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
+                            working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].modules_counter = n;
+                            working_copy.graph.price += n*working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].price;
+                            break;
+                        }
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(working_copy.graph.price);
+
         }
     }
 }
