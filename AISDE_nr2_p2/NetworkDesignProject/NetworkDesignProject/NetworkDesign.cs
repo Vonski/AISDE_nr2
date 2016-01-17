@@ -256,7 +256,7 @@ namespace NetworkDesignProject
 
         }
 
-        public void nextSolution()
+        public bool nextSolution()
         {
             int did = choose();
             
@@ -284,6 +284,8 @@ namespace NetworkDesignProject
                 {
                     int n = (int)Math.Ceiling(working_copy.graph.demands[did - 1].length / residual_graph.graph.links[i].capacity);
                     residual_graph.graph.links[i].modules_counter += n;
+                    residual_graph.graph.links[i].link_length = n*residual_graph.graph.links[i].price/residual_graph.graph.links[i].capacity;
+
                 }
                 else if(residual_graph.graph.links[i].capacity_in_use > 0)
                     if (working_copy.graph.demands[did - 1].length > residual_graph.graph.links[i].capacity-residual_graph.graph.links[i].capacity_in_use)
@@ -292,6 +294,8 @@ namespace NetworkDesignProject
                         if (n < 0)
                             n = 0;
                         residual_graph.graph.links[i].modules_counter += n;
+                        residual_graph.graph.links[i].link_length = n * residual_graph.graph.links[i].price / residual_graph.graph.links[i].capacity;
+
                     }
             }
             
@@ -317,14 +321,49 @@ namespace NetworkDesignProject
                         break;
                     }
             }
-
-            if(best_solution.price>working_copy.graph.price)
-                best_solution = working_copy.graph.copyGraph();
-
+            residual_graph.graph.show();
             reference_solution = working_copy.graph.copyGraph();
 
+
+            if (best_solution.price < working_copy.graph.price)
+            {
+                double x = -(working_copy.graph.price - best_solution.price) / temperature;
+                double p = Math.Exp(x);
+                Random rnd = new Random();
+                double r = rnd.NextDouble();
+                if (r <= p)
+                {
+                    best_solution = working_copy.graph.copyGraph();
+                    return true;
+                }
+            }
+            else if (best_solution.price > working_copy.graph.price)
+            {
+                best_solution = working_copy.graph.copyGraph();
+                return true;
+            }
+            return false;
         }
-        
+
+        public Graph designing()
+        {
+            firstSolution();
+            bool changed;
+            int counter = 0;
+            temperature = 1000;
+            while (temperature > 1 && counter < 20)
+            {
+                changed = nextSolution();
+                if (changed == true)
+                {
+                    temperature = temperature / 2;
+                    counter = 0;
+                }
+                else
+                    counter++;
+            }
+            return best_solution;
+        }
 
     }
 }
