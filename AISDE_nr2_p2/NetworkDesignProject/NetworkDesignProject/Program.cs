@@ -11,13 +11,7 @@ namespace NetworkDesignProject
         static void Main(string[] args)
         {
             NetworkDesign test = new NetworkDesign();
-
-            test.show();
-            test.firstSolution();
-            test.show();
-            test.showSolution();
-            test.nextSolution();
-            test.show();
+            test.designing();
             test.showSolution();
 
             Console.ReadLine();

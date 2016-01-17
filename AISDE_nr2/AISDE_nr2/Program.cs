@@ -11,43 +11,40 @@ namespace AISDE_nr2
     {
         static void Main(string[] args)
         {
-            int A = 100000;
-            
+            int A;
+            double t1=0, t2=0;
 
-            int choose_method;
             Stopwatch sw = new Stopwatch();
-            Console.WriteLine("Wybierz algorytm:");
-            Console.WriteLine("[0] Poprawianie etykiet");
-            Console.WriteLine("[1] Floyd");
-            choose_method = Convert.ToInt32(Console.ReadLine());
-            if (choose_method == 0)
+            Console.WriteLine("Podaj liczbe iteracji: ");
+
+            A = Convert.ToInt32(Console.ReadLine());
+            
+            LabelCorrecting test = new LabelCorrecting();
+            for (int i = 0; i < A; i++)
             {
-                sw.Start();
-                LabelCorrecting test = new LabelCorrecting();
-                for (int i = 0; i < A; i++)
-                {
-                    test.redraw();
-                    test.findAll();
-                }
+                sw.Restart();
+                test.redraw();
+                test.findAll();
                 sw.Stop();
-                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                t1 += sw.ElapsedMilliseconds;
             }
-            else if(choose_method == 1)
+            t1 = t1 / A;
+            Console.WriteLine("Poprawianie etykiet: {0}", t1);
+            
+            
+            Floyd test2 = new Floyd();
+            for (int i = 0; i < A; i++)
             {
-                sw.Start();
-                Floyd test = new Floyd();
-                for (int i = 0; i < A; i++)
-                {
-                    test.redraw();
-                    test.findAll();
-                }
+                sw.Restart();
+                test2.redraw();
+                test2.findAll();
                 sw.Stop();
-                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                t2 += sw.ElapsedMilliseconds;
             }
-            else
-            {
-                Console.WriteLine("Wybór spoza zakresu");
-            }
+            t2 = t2 / A;
+            Console.WriteLine("Floyd: {0}", t2);
+            
+            
             Console.ReadLine();
             
 

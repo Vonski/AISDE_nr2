@@ -48,7 +48,6 @@
     <Compile Include="Link.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="NormalDistributionGenerator.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

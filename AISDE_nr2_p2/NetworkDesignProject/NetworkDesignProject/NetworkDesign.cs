@@ -284,19 +284,21 @@ namespace NetworkDesignProject
                 {
                     int n = (int)Math.Ceiling(working_copy.graph.demands[did - 1].length / residual_graph.graph.links[i].capacity);
                     residual_graph.graph.links[i].modules_counter += n;
-                    residual_graph.graph.links[i].link_length = n*residual_graph.graph.links[i].price/residual_graph.graph.links[i].capacity;
-
+                    residual_graph.graph.links[i].link_length = residual_graph.graph.links[i].price / residual_graph.graph.links[i].capacity;
                 }
-                else if(residual_graph.graph.links[i].capacity_in_use > 0)
-                    if (working_copy.graph.demands[did - 1].length > residual_graph.graph.links[i].capacity-residual_graph.graph.links[i].capacity_in_use)
+                else if (residual_graph.graph.links[i].capacity_in_use > 0)
+                {
+                    if (working_copy.graph.demands[did - 1].length > residual_graph.graph.links[i].capacity - residual_graph.graph.links[i].capacity_in_use)
                     {
                         int n = (int)Math.Ceiling((working_copy.graph.demands[did - 1].length - (residual_graph.graph.links[i].capacity - residual_graph.graph.links[i].capacity_in_use)) / residual_graph.graph.links[i].capacity);
                         if (n < 0)
                             n = 0;
                         residual_graph.graph.links[i].modules_counter += n;
-                        residual_graph.graph.links[i].link_length = n * residual_graph.graph.links[i].price / residual_graph.graph.links[i].capacity;
-
+                        residual_graph.graph.links[i].link_length = n * residual_graph.graph.links[i].price / (n * residual_graph.graph.links[i].capacity + residual_graph.graph.links[i].capacity_in_use);
                     }
+                }
+                else
+                    residual_graph.graph.links[i].link_length = 0;
             }
             
             Path path = new Path();
@@ -321,7 +323,6 @@ namespace NetworkDesignProject
                         break;
                     }
             }
-            residual_graph.graph.show();
             reference_solution = working_copy.graph.copyGraph();
 
 
