@@ -36,6 +36,8 @@ namespace NetworkDesignProject
             Console.WriteLine();
             for (int i = 0; i < number_of_nodes; i++)
                 Console.WriteLine("Wezel: " + nodes[i].id);
+            Console.WriteLine();
+            Console.WriteLine(price);
         }
 
         public Heap<Link> copyHeap(int i)
@@ -62,6 +64,7 @@ namespace NetworkDesignProject
             Graph graph = new Graph();
             graph.number_of_links = this.number_of_links;
             graph.number_of_nodes = this.number_of_nodes;
+            graph.price = this.price;
             graph.links_from_node = new List<Heap<Link>>();
             graph.nodes = new Node[number_of_nodes];
             graph.links = new Link[number_of_links];

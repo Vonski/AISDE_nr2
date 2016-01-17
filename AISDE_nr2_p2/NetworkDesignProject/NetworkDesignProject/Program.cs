@@ -12,7 +12,6 @@ namespace NetworkDesignProject
         {
             NetworkDesign test = new NetworkDesign();
             test.designing();
-            test.showSolution();
 
             Console.ReadLine();
         }

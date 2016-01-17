@@ -316,7 +316,7 @@ namespace NetworkDesignProject
                     if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k + 1]))
                     {
                         int n;
-                        if (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use==0)
+                        if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use==0)
                             n = (int)Math.Ceiling(working_copy.graph.demands[did - 1].length / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
                         else
                             n = (int)Math.Ceiling((working_copy.graph.demands[did - 1].length - (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity - residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use)) / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
@@ -357,9 +357,9 @@ namespace NetworkDesignProject
             showSolution();
             bool changed;
             int counter = 0;
-            temperature = 1000;
-            double alpha = 0.9;
-            while (temperature > 1)// && counter < 20)
+            temperature = 100;
+            double alpha = 0.8;
+            while (temperature > 1 && counter < 100)
             {
                 changed = nextSolution();
                 if (changed == true)
@@ -369,9 +369,12 @@ namespace NetworkDesignProject
                 }
                 else
                     counter++;
+                Console.WriteLine(counter);
+                showSolution();
             }
 
             showSolution();
+            best_solution.show();
             return best_solution;
         }
 
