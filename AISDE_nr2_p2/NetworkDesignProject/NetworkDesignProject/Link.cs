@@ -15,6 +15,7 @@ namespace NetworkDesignProject
         public double price;            // Cena modułu
         public double capacity;         // Przepustowosc modułu
         public int modules_counter;     // Aktualna liczba modułów
+        public double capacity_in_use;     // Aktualnie używana przepustowość na danym łączu
 
         public Link()
         {
@@ -22,6 +23,9 @@ namespace NetworkDesignProject
             node_start = 0;
             node_end = 0;
             link_length = 0;
+            price = 0;
+            capacity = 0;
+            capacity_in_use = 0;
         }
 
         public Link(int id, int start, int end, int length)

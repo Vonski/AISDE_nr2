@@ -116,5 +116,65 @@ namespace NetworkDesignProject
 
             return graph;
         }
+
+        public Graph residualGraph()
+        {
+            Graph graph = new Graph();
+            graph.number_of_links = this.number_of_links;
+            graph.number_of_nodes = this.number_of_nodes;
+            graph.links_from_node = new List<Heap<Link>>();
+            graph.nodes = new Node[number_of_nodes];
+            graph.links = new Link[number_of_links];
+            graph.paths = new Path[number_of_nodes][];
+            graph.demands = new Demand[number_of_demands];
+
+
+            for (int i = 0; i < number_of_nodes; i++)
+            {
+                Heap<Link> heap = new Heap<Link>();
+                graph.links_from_node.Add(heap);
+                graph.links_from_node[i] = this.copyHeap(i);
+                graph.nodes[i] = new Node();
+                graph.nodes[i].id = this.nodes[i].id;
+                graph.nodes[i].label = this.nodes[i].label;
+                graph.nodes[i].enqueued = this.nodes[i].enqueued;
+            }
+
+            for (int i = 0; i < number_of_links; i++)
+            {
+                graph.links[i] = new Link();
+                graph.links[i].id = this.links[i].id;
+                graph.links[i].capacity = this.links[i].capacity;
+                graph.links[i].link_length = this.links[i].link_length;
+                graph.links[i].modules_counter = this.links[i].modules_counter;
+                graph.links[i].node_start = this.links[i].node_start;
+                graph.links[i].node_end = this.links[i].node_end;
+                graph.links[i].price = this.links[i].price;
+            }
+
+            for (int i = 0; i < number_of_nodes; i++)
+            {
+                graph.paths[i] = new Path[number_of_nodes];
+                for (int j = 0; j < number_of_nodes; j++)
+                {
+                    graph.paths[i][j] = new Path();
+                    graph.paths[i][j] = this.paths[i][j];
+                }
+            }
+
+            for (int i = 0; i < number_of_demands; i++)
+            {
+                graph.demands[i] = new Demand();
+                graph.demands[i].id = this.demands[i].id;
+                graph.demands[i].length = this.demands[i].length;
+                graph.demands[i].node_end = this.demands[i].node_end;
+                graph.demands[i].node_start = this.demands[i].node_start;
+                graph.demands[i].nodes_on_path = this.demands[i].nodes_on_path;
+
+            }
+
+
+            return graph;
+        }
     }
 }

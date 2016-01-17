@@ -15,6 +15,9 @@ namespace NetworkDesignProject
             test.show();
             test.firstSolution();
             test.show();
+            test.nextSolution();
+            test.show();
+            test.showSolution();
 
             Console.ReadLine();
         }
