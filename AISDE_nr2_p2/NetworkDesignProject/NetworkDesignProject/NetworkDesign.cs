@@ -208,8 +208,18 @@ namespace NetworkDesignProject
             }
             Random rnd = new Random();
 
-            Path path = new Path();
-            int r = rnd.Next(0, working_copy.graph.number_of_demands);
+            Path[][] path = new Path[working_copy.graph.number_of_nodes][];
+            for(int i=0; i<working_copy.graph.number_of_nodes; i++)
+            {
+                Path[] p = new Path[working_copy.graph.number_of_nodes];
+                path[i] = p;
+                for (int j = 0; j < working_copy.graph.number_of_nodes; j++)
+                    path[i][j] = new Path();
+            }
+            
+            path = working_copy.findAll();
+            //path = working_copy.findAll();
+            /*int r = rnd.Next(0, working_copy.graph.number_of_demands);
             int rz = r;
             while(r>=0)
             {
@@ -217,12 +227,14 @@ namespace NetworkDesignProject
                 working_copy.graph.demands[r].dataFromPath(path);
                 r--;
             }
-            while (rz < working_copy.graph.number_of_demands)
+            while (rz+1 < working_copy.graph.number_of_demands)
             {
-                path = working_copy.findAB(working_copy.graph.demands[rz].node_start, working_copy.graph.demands[rz].node_end);
-                working_copy.graph.demands[rz].dataFromPath(path);
+                path = working_copy.findAB(working_copy.graph.demands[rz+1].node_start, working_copy.graph.demands[rz+1].node_end);
+                working_copy.graph.demands[rz+1].dataFromPath(path);
                 rz++;
-            }
+            }*/
+            for (int r = 0; r < working_copy.graph.number_of_demands; r++)
+                working_copy.graph.demands[r].dataFromPath(path[working_copy.graph.demands[r].node_start - 1][working_copy.graph.demands[r].node_end - 1]);
 
             graphUpdate();
             best_solution = working_copy.graph.copyGraph();
@@ -295,7 +307,7 @@ namespace NetworkDesignProject
                         int n = (int)Math.Ceiling((working_copy.graph.demands[did - 1].length - (residual_graph.graph.links[i].capacity - residual_graph.graph.links[i].capacity_in_use)) / residual_graph.graph.links[i].capacity);
                         if (n < 0)
                             n = 0;
-                        residual_graph.graph.links[i].modules_counter += n;
+                        residual_graph.graph.links[i].modules_counter +=n;
                         residual_graph.graph.links[i].link_length = n * residual_graph.graph.links[i].price / (n * residual_graph.graph.links[i].capacity + residual_graph.graph.links[i].capacity_in_use);
                     }
                     else
@@ -316,11 +328,11 @@ namespace NetworkDesignProject
                     if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].node_end == int.Parse(words[k + 1]))
                     {
                         int n;
-                        if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use==0)
+                        if (working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use == 0)
                             n = (int)Math.Ceiling(working_copy.graph.demands[did - 1].length / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
                         else
-                            n = (int)Math.Ceiling((working_copy.graph.demands[did - 1].length - (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity - residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use)) / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);
-                        if (n < 0)
+                            n = (int)Math.Ceiling((working_copy.graph.demands[did - 1].length - (residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity - residual_graph.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity_in_use)) / working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].capacity);  
+                        if (n<0)
                             n = 0;
                         working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].modules_counter += n;
                         working_copy.graph.price += n * working_copy.graph.links_from_node[int.Parse(words[k]) - 1].table[j].price;
@@ -328,10 +340,12 @@ namespace NetworkDesignProject
                         break;
                     }
             }
-            reference_solution = working_copy.graph.copyGraph();
 
 
-            if (best_solution.price < working_copy.graph.price)
+            if (working_copy.graph.price < best_solution.price)
+                best_solution = working_copy.graph.copyGraph();
+
+            if (reference_solution.price < working_copy.graph.price)
             {
                 double x = -(working_copy.graph.price - best_solution.price) / temperature;
                 double p = Math.Exp(x);
@@ -339,13 +353,13 @@ namespace NetworkDesignProject
                 double r = rnd.NextDouble();
                 if (r <= p)
                 {
-                    best_solution = working_copy.graph.copyGraph();
+                    reference_solution = working_copy.graph.copyGraph();
                     return true;
                 }
             }
-            else if (best_solution.price > working_copy.graph.price)
+            else if (reference_solution.price > working_copy.graph.price)
             {
-                best_solution = working_copy.graph.copyGraph();
+                reference_solution = working_copy.graph.copyGraph();
                 return true;
             }
             return false;
@@ -357,8 +371,8 @@ namespace NetworkDesignProject
             showSolution();
             bool changed;
             int counter = 0;
-            temperature = 100;
-            double alpha = 0.8;
+            temperature = 500;
+            double alpha = 0.9;
             while (temperature > 1 && counter < 100)
             {
                 changed = nextSolution();
