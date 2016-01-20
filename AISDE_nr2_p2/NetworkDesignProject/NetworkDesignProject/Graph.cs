@@ -20,7 +20,7 @@ namespace NetworkDesignProject
         public double price;
 
         public Graph()
-        {
+        {          
         }
 
         public void show()
@@ -64,6 +64,7 @@ namespace NetworkDesignProject
             Graph graph = new Graph();
             graph.number_of_links = this.number_of_links;
             graph.number_of_nodes = this.number_of_nodes;
+            graph.number_of_demands = this.number_of_demands;
             graph.price = this.price;
             graph.links_from_node = new List<Heap<Link>>();
             graph.nodes = new Node[number_of_nodes];
@@ -127,6 +128,7 @@ namespace NetworkDesignProject
             Graph graph = new Graph();
             graph.number_of_links = this.number_of_links;
             graph.number_of_nodes = this.number_of_nodes;
+            graph.number_of_demands = this.number_of_demands;
             graph.links_from_node = new List<Heap<Link>>();
             graph.nodes = new Node[number_of_nodes];
             graph.links = new Link[number_of_links];
@@ -144,6 +146,16 @@ namespace NetworkDesignProject
                 graph.nodes[i].enqueued = this.nodes[i].enqueued;
             }
 
+            for (int i = 0; i < number_of_nodes; i++)
+            {
+                graph.paths[i] = new Path[number_of_nodes];
+                for (int j = 0; j < number_of_nodes; j++)
+                {
+                    graph.paths[i][j] = new Path();
+                    graph.paths[i][j] = this.paths[i][j];
+                }
+            }
+
             for (int i = 0; i < number_of_links; i++)
             {
                 Link link = new Link();
@@ -151,24 +163,18 @@ namespace NetworkDesignProject
                 graph.links_from_node[this.links[i].node_start - 1].Add(link);
                 graph.links[i].id = this.links[i].id;
                 graph.links[i].capacity = this.links[i].capacity;
-                graph.links[i].capacity_in_use = this.links[i].capacity_in_use;
-                graph.links[i].link_length = this.links[i].link_length;
-                graph.links[i].modules_counter = this.links[i].modules_counter;
+                graph.links[i].capacity_in_use = this.links[i].capacity_in_use % this.links[i].capacity; 
                 graph.links[i].node_start = this.links[i].node_start;
                 graph.links[i].node_end = this.links[i].node_end;
-                graph.links[i].price = this.links[i].price;
-            }
-
-            for (int i = 0; i < graph.number_of_links; i++)
-            {
-                graph.links[i].capacity_in_use = graph.links[i].capacity_in_use % graph.links[i].capacity;
                 if (graph.links[i].capacity_in_use != 0)
                     graph.links[i].modules_counter = 1;
                 else
                     graph.links[i].modules_counter = 0;
-            }
-            graph.price = 0;
+                graph.price = 0;
+                graph.links[i].link_length = 0;
 
+
+            }
             return graph;
         }
     }
